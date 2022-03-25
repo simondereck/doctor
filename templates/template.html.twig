@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+    <style>
+        .download-div{
+            background-color: white;
+            padding: 50px;
+            width: 80%;
+            margin: auto;
+            overflow-x: scroll;
+            height: 100%;
+        }
+        body{
+            background: url("/imgs/herb-5.jpeg") no-repeat center center fixed;
+        }
+    </style>
+    <div class="download-div">
+        <h2>Template generated succesfully 🙆‍</h2>
+        <h4>{{ filename }}</h4>
+        <a class="btn btn-success" href="/{{ filename }}">下载</a>
+    </div>
+
+{% endblock %}

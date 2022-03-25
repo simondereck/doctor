@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+    <style>
+        body{
+            background: whitesmoke;
+        }
+        .medical-div{
+            padding: 50px;
+            width: 80%;
+            margin: auto;
+            min-height: 100vh;
+            background: white;
+        }
+
+        .medical-div-title{
+            width: fit-content;
+            margin: auto;
+        }
+        tbody tr:hover{
+            background-color: whitesmoke;
+            cursor: pointer;
+        }
+
+
+
+        table th,td{
+            min-width: 80px;
+        }
+        .button-group{
+            text-align: right;
+        }
+
+        .btn-add-formula{
+            padding: 10px;
+            right: 20px;
+            bottom: 50%;
+            background: darkcyan;
+            cursor: pointer;
+            color: white;
+            box-shadow: 0 5px 5px rgba(0,0,0,0.3);
+        }
+        .modal-background{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .show-modal{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .modal-div-close{
+            color: black;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .modal-div{
+            width: 80vw;
+            margin: auto;
+            margin-top: 10vh;
+            background-color: white;
+            box-shadow: 0 10px 10px rgba(0,0,0,0.4);
+        }
+
+        .modal-div-body{
+            padding: 20px;
+            height: 60vh;
+            overflow: scroll;
+        }
+    </style>
+
+    <div class="medical-div">
+        <div class="medical-div-title form-group"><h2> 创建中成药 👀</h2></div>
+        <div class="medical-div-table form-group">
+            <form method="post" action="/medical/create">
+                {{ form_start(medical_form) }}
+
+                {{ form_end(medical_form) }}
+            </form>
+        </div>
+
+    </div>
+    <script>
+        $(function () {
+            let dataArray = {};
+            let results;
+            $(".medical-div").on("click",".btn-add-formula",function () {
+                // medical_form[formula]
+                let $modalDiv = "<div class='modal-background'>" +
+                    "   <div class='modal-div'>" +
+                    "       <div class='modal-div-close'>x</div>" +
+                    "       <div class='modal-div-body'>" +
+                    "           <input class='form-control' id='keywords' name='keywords' placeholder='搜索' />" +
+                    "           <button class='search-item btn btn-success'>搜索</button>" +
+                    "           <div class='search-result form-group'></div>" +
+                    "           <div class='form-group'>" +
+                    "               <button class='btn btn-success float-right btn-make-sure'>确认</button>" +
+                    "           </div>" +
+                    "           <table class='table modal-formula'>" +
+                    "               <tr>" +
+                    "                   <th>ID</th>" +
+                    "                   <th>name</th>" +
+                    "                   <th>pinyin</th>" +
+                    "                   <th>latin</th>" +
+                    "                   <th>内部</th>" +
+                    "                   <th>外部</th>" +
+                    "               </tr>" +
+                    "           </table>" +
+                    "       </div>" +
+                    "   </div>" +
+                    "</div>";
+
+                $("body").on("click",".search-item",function () {
+                    let keywords = $("#keywords").val();
+                    let params = {"keywords":keywords};
+
+                    $.post("/search/herb",params,function (data) {
+                        results = JSON.parse(data);
+                        if (results.status===1){
+
+                            let dataResult = "<table class='table'>";
+                            results.items.forEach(function (item,key) {
+                                console.log(item);
+                                dataResult += "<tr class='result-tr' data-id='"+item.id+"' data-key='"+key+"'>" +
+                                    "<td>"+item.name+"</td>" +
+                                    "<td>"+item.category+"</td>" +
+                                    "<td>"+item.pinyin+"</td>" +
+                                    "<td>"+item.latinName+"</td>" +
+                                    "</tr>";
+                            });
+                            dataResult += "</table>";
+
+                            $(".search-result").html(dataResult);
+
+                        }else{
+                            alert("没有结果");
+                        }
+                    });
+                });
+
+                $("body").append($modalDiv);
+                $("html").addClass("show-modal");
+                $("body").addClass("show-modal");
+            });
+
+            $("body").on("click",".modal-div-close",function () {
+                $(".modal-background").remove();
+                $("body").removeClass("show-modal");
+                $("html").removeClass("show-modal");
+            });
+
+            $("body").on("click",".result-tr",function () {
+                $(".search-result").html("");
+                let key = $(this).attr("data-key");
+                let item = results.items[parseInt(key)];
+                dataArray[item.id] = item;
+                console.log(dataArray);
+                let $item = "<tr>" +
+                    "<td>"+item.id+"</td>" +
+                    "<td>"+item.name+"</td>" +
+                    "<td>"+item.latin+"</td>" +
+                    "<td>"+item.pinyin+"</td>" +
+                    "<td class='count'><input name='count-"+item.id+"' class='form-control' value='0' type='number'/></td>" +
+                    "<td class='count'><input name='outside-count-"+item.id+"' class='form-control' value='0' type='number'/></td>" +
+                    "<td><button class='btn btn-danger btn-delete' data-id='"+item.id+"'>删除</button></td>" +
+                    "</tr>"
+                $(".modal-formula").append($item);
+
+                $("body").on("click",".btn-delete",function () {
+                    let id = $(this).attr("data-id");
+                    delete dataArray[parseInt(id)];
+                    console.log(dataArray);
+                    $(this).parents("tr").remove();
+                });
+            });
+
+            $("body").on("click",".btn-make-sure",function () {
+                let jsonObj = [];
+                for (let key in dataArray){
+                    let item = dataArray[parseInt(key)];
+                    let outside = $("input[name=outside-count-"+item.id+"]").val();
+                    if (parseInt(outside)===0){
+                        jsonObj.push({"id:":item.id,"chinese":item.name,"count":$("input[name=count-"+item.id+"]").val()});
+                    }else{
+                        jsonObj.push({"id:":item.id,"chinese":item.name,"count":$("input[name=count-"+item.id+"]").val(),"count_outside":outside})
+                    }
+                }
+                $("#medical_form_formula").val(JSON.stringify(jsonObj));
+                $(".modal-div-close").click();
+            });
+        });
+
+    </script>
+{% endblock %}

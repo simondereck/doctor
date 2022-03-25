@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        background: url("/imgs/herb-5.jpeg") no-repeat center center fixed;
+    }
+    .medical-div{
+        padding: 50px;
+        width: 80%;
+        margin: auto;
+        min-height: 100vh;
+        background: white;
+    }
+
+    .medical-div-title{
+        width: fit-content;
+        margin: auto;
+    }
+    tbody tr:hover{
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+
+
+
+    table th,td{
+        min-width: 80px;
+    }
+    .button-group{
+        text-align: right;
+    }
+</style>
+
+<div class="medical-div">
+    <div class="medical-div-title form-group"><h2> 更新单品 ✅</h2></div>
+    <div class="medical-div-table form-group">
+        <form method="post" action="/medical/single/update?id={{ id }}">
+            {{ form_start(medical_form) }}
+
+            {{ form_end(medical_form) }}
+        </form>
+    </div>
+
+</div>
+{% endblock %}

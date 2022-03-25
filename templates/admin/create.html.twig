@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        background-image: url("/imgs/story-1.jpeg");
+    }
+
+
+    .create-admin-div{
+        padding: 50px;
+        background-color: white;
+        width: 70%;
+        margin: auto;
+        height: 100vh;
+    }
+    .create-admin-div-title{
+        text-align: center;
+    }
+</style>
+
+<div class="create-admin-div">
+    <div class="create-admin-div-title"><h2>Create Admin</h2></div>
+    <form method="post" action="/admin/create">
+        {{ form_start(admin_form) }}
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(admin_form) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_row(admin_form.email) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(admin_form.telephone) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(admin_form.username) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(admin_form.password) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_row(admin_form.status) }}
+        </div>
+
+
+        {{ form_end(admin_form) }}
+    </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse !{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        background-image: url("/imgs/people-8.jpeg");
+    }
+    .about-div{
+        padding: 50px;
+        background-color:white;
+        width: 70%;
+        min-height: 100vh;
+        margin: auto;
+    }
+    .about-title-div{
+        text-align: center;
+    }
+    .img-content{
+        text-align: center;
+    }
+    .about-div img{
+        width: 60%;
+        object-fit: cover;
+        margin: auto;
+    }
+</style>
+
+<div class="about-div">
+    <div class="about-title-div form-group"><h2>关于我们</h2></div>
+    <div class="form-group">
+        <p>
+            巴黎百草苑创立于1997年。是法国最大的中草药进口商与零售商。多年来专注服务在欧洲各地的中医师，为广大客户提供优质的传统及现代中草药。
+        </p>
+        <p class="img-content">
+            <img src="/imgs/team.jpeg" />
+        </p>
+    </div>
+</div>
+{% endblock %}

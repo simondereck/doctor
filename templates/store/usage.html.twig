@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+    <style>
+        .download-div{
+            background-color: white;
+            padding: 50px;
+            width: 80%;
+            margin: auto;
+            overflow-x: scroll;
+            height: 100%;
+        }
+        body{
+            background: url("/imgs/herb-5.jpeg") no-repeat center center fixed;
+        }
+    </style>
+    <div class="download-div">
+        <h2>上传用量 🙆‍</h2>
+        <form method="post" enctype="multipart/form-data">
+
+            {{ form_start(upload_form) }}
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(upload_form) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(upload_form.type) }}
+            </div>
+
+
+            <div class="form-group">
+                {{ form_row(upload_form.file) }}
+            </div>
+
+            {{ form_end(upload_form) }}
+        </form>
+    </div>
+
+{% endblock %}

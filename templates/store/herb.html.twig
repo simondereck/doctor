@@ -1,0 +1,150 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+    <style>
+
+        .herb-div{
+            background-color: white;
+            padding: 50px;
+            width: 100%;
+            overflow-x: scroll;
+        }
+        .herb-div-title{
+            width: fit-content;
+            margin: auto;
+        }
+        tbody tr:hover{
+            background-color: whitesmoke;
+            cursor: pointer;
+        }
+
+        #pageNation{
+            margin: auto;
+            width: fit-content;
+        }
+        table th,td{
+            min-width: 80px;
+        }
+    </style>
+
+    <div class="herb-div">
+        <div class="herb-div-title form-group"><h3>草药列表  ✅</h3></div>
+        <div id="pageNation">
+            <div class="tables">
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th >#</th>
+                        <th >tid</th>
+                        <th >series</th>
+                        <th >subSeries</th>
+                        <th >name</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th >Option</th>
+                    </tr>
+                    <tr>
+                        <form method="post" action="/store/herb" id="search-bar">
+                            {% if params.id is defined %}
+                                <th ><input name="id" class="form-control" value="{{ params.id }}"/></th>
+                            {% else %}
+                                <th ><input name="id" class="form-control" /></th>
+                            {% endif %}
+                            {% if params.tid is defined %}
+                                <th ><input name="tid" class="form-control" value="{{ params.tid }}"/></th>
+                            {% else %}
+                                <th ><input name="tid" class="form-control" /></th>
+                            {% endif %}
+                            {% if params.series is defined %}
+                                <th ><input name="series" class="form-control" value="{{ params.series }}"/></th>
+                            {% else %}
+                                <th ><input name="series" class="form-control" /></th>
+                            {% endif %}
+                            {% if params.subSeries is defined %}
+                                <th ><input name="subSeries" class="form-control" value="{{ params.subSeries }}"/></th>
+                            {% else %}
+                                <th ><input name="subSeries" class="form-control" /></th>
+                            {% endif %}
+                            {% if params.name is defined %}
+                                <th ><input name="name" class="form-control" value="{{ params.name }}"/></th>
+                            {% else %}
+                                <th ><input name="name" class="form-control" /></th>
+                            {% endif %}
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>
+                                <button class="btn btn-success">搜索</button>
+                                <button class="btn btn-danger btn-download">下载</button>
+                                <button class="btn btn-info btn-template">模版</button>
+                            </th>
+                        </form>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for store in stores %}
+                        <tr data-id="{{ store.item.id }}">
+                            <th>{{ store.item.id }}</th>
+                            <td>{{ store.item.tid }}</td>
+                            <td>{{ store.item.series }}</td>
+                            <td>{{ store.item.subSeries }}</td>
+                            <td>{{ store.item.name }}</td>
+                            {% for it in store.store %}
+                                <td>{{ it.cdate }} <br>  {{ it.data }}</td>
+                            {% endfor %}
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div id="pageNation">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {% for page in pages %}
+                            {% if page.postion == currentPage %}
+                                <li class="page-item active"><a class="page-link" data-href="{{page.url}}">{{ page.key }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" data-href="{{page.url}}">{{ page.key }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        $("tbody").on("click","tr",function () {
+            let id = $(this).attr("data-id");
+            window.location.assign("/store/herb/detail?id="+id);
+        });
+
+        $(".pagination").on("click",".page-link",function () {
+            let href = $(this).attr("data-href");
+            $("#search-bar").attr("action",href);
+            $("#search-bar").submit();
+        });
+
+        $(".btn-download").click(function () {
+            let href = "/store/herb/download";
+            $("#search-bar").attr("action",href);
+            $("#search-bar").submit();
+        });
+
+        $(".btn-template").click(function () {
+           let href = "/store/herb/template";
+            $("#search-bar").attr("action",href);
+            $("#search-bar").submit();
+        });
+    </script>
+{% endblock %}

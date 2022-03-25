@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet"
+              href="{{ asset('styles/app.css') }}">
+        <link rel="stylesheet"
+              href="{{ asset('vendor/bootstrap/dist/css/bootstrap.css') }}">
+        <script src="{{ asset('vendor/jquery/dist/jquery.js') }}" ></script>
+        <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.js') }}" ></script>
+
+        <meta property="og:image" content="{{ asset("imgs/logo-3.png") }}" >
+        <link rel="icon" href="{{ asset("imgs/logo-3.png") }}" type="image/png" sizes="16x8">
+        <meta property="og:image" content="{{ asset('imgs/people-7.jpeg') }}">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-success">
+            <a class="navbar-brand  text-white" href="/">
+                <img src="/imgs/logo-3.png" width="30" height="30" class="d-inline-block align-top" alt="" />
+                Calebasse 库存系统
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto nav-flex-icons">
+                    {% if app.session.get("user") %}
+                        {% if app.session.get("type")==1 %}
+                            <li class="nav-item dropdown" >
+                                <a class="nav-link dropdown-toggle" href="/bussiness/platform" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    角色管理
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/admin/lists">管理员列表</a>
+                                    <a class="dropdown-item" href="/admin/create">创建管理员</a>
+                                    <a class="dropdown-item" href="/admin/users/lists">用户列表</a>
+                                    <a class="dropdown-item" href="/admin/create/user">创建用户</a>
+                                </div>
+                            </li>
+
+                        {% endif %}
+
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/bussiness/platform" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                草药管理
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/herb/lists">草药列表</a>
+                                <a class="dropdown-item" href="/herb/create">创建草药</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/bussiness/platform" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                中成药管理
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/medical">中成药列表</a>
+                                <a class="dropdown-item" href="/medical/create">创建中成药</a>
+                                <a class="dropdown-item" href="/medical/single">单味产品列表</a>
+                                <a class="dropdown-item" href="/medical/single/create">创建单味产品</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/bussiness/platform" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                库存
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/store/herb">原料库存</a>
+                                <a class="dropdown-item" href="/store/index">中成药库存</a>
+                                <a class="dropdown-item" href="/store/single">单味品库存</a>
+                                <a class="dropdown-item" href="/store/upload">上传库存</a>
+                                <a class="dropdown-item" href="/store/usage">用量上传</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/bussiness/platform" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                法律和用法
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/law">法律列表</a>
+                                <a class="dropdown-item" href="#"></a>
+                                <a class="dropdown-item" href="/usage/lists">用法列表</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/site/about">关于我们</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Hi,{{app.session.get("user").username}}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/logout">退出</a>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="/bussiness/platform" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                登录
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/admin/login">管理员登陆</a>
+                                <a class="dropdown-item" href="/user/login">用户登陆</a>
+                            </div>
+                        </li>
+                    {% endif %}
+
+
+                </ul>
+            </div>
+        </nav>
+        {% block body %}{% endblock %}
+
+        <footer id="footer">
+            COPYRIGHTS @ Calebasse 2021 - 2050
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,213 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+<style>
+
+    .herb-div{
+        background-color: white;
+        padding: 50px;
+        width: 100%;
+        overflow-x: scroll;
+    }
+    .herb-div-title{
+        width: fit-content;
+        margin: auto;
+    }
+    tbody tr:hover{
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+
+    #pageNation{
+        margin: auto;
+        width: fit-content;
+    }
+</style>
+
+<div class="herb-div">
+   <div class="herb-div-title form-group"><h3>草药列表  ✅</h3></div>
+   <div id="pageNation">
+       <div class="tables">
+           <table class="table table-striped">
+               <thead class="thead-dark">
+                   <tr>
+                       <th scope="col">#</th>
+                       <th scope="col">pinyin</th>
+                       <th scope="col">name</th>
+                       <th scope="col">latin</th>
+                       <th scope="col">realPinyin</th>
+                       <th scope="col">realName</th>
+                       <th scope="col">realLatin</th>
+
+                       <th scope="col">fid</th>
+                       <th scope="col">tid</th>
+                       <th scope="col">category</th>
+                       <th scope="col">cc</th>
+                       <th scope="col">series</th>
+                       <th scope="col">subSeries</th>
+                       <th scope="col">fp</th>
+                       <th scope="col">franceName</th>
+                       <th scope="col">utime</th>
+                       <th scope="col">ctime</th>
+                       <th scope="col">Option</th>
+                   </tr>
+                    <tr>
+                        <form method="post" action="/herb/lists" id="search-bar">
+                            <th scope="col"></th>
+                            {% if params and params.pinyin is defined %}
+                                <th scope="col"><input name="pinyin" class="form-control" value="{{ params.pinyin }}" /></th>
+                            {% else %}
+                                <th scope="col"><input name="pinyin" class="form-control" /></th>
+                            {% endif %}
+                            {% if params and params.name is defined %}
+                                <th scope="col"><input name="name" class="form-control" value="{{ params.name }}" /></th>
+                            {% else %}
+                                <th scope="col"><input name="name" class="form-control" /></th>
+                            {% endif %}
+
+                            {% if params and params.latinName is defined %}
+                                <th scope="col"><input name="latinName" class="form-control" value="{{ params.latinName }}" /></th>
+                            {% else %}
+                                <th scope="col"><input name="latinName" class="form-control" /></th>
+                            {% endif %}
+
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+
+                            <th scope="col"></th>
+                            {% if params and params.tid is defined %}
+                                <th scope="col"><input name="tid" class="form-control" value="{{ params.tid }}" /></th>
+                            {% else %}
+                                <th scope="col"><input name="tid" class="form-control" /></th>
+                            {% endif %}
+
+                            {% if params and params.category is defined %}
+                                <th scope="col"><input name="category" class="form-control" value="{{ params.category }}" /></th>
+                            {% else %}
+                                <th scope="col"><input name="category" class="form-control" /></th>
+                            {% endif %}
+
+                            {% if params and params.cc is defined %}
+                                <th scope="col"><input name="cc" class="form-control" value="{{ params.cc }}" /></th>
+                            {% else %}
+                                <th scope="col"><input name="cc" class="form-control" /></th>
+                            {% endif %}
+
+
+                            {% if params and params.series is defined %}
+                                <th scope="col"><input name="series" class="form-control" value="{{ params.series }}" /></th>
+                            {% else %}
+                                <th scope="col"><input name="series" class="form-control" /></th>
+                            {% endif %}
+                            {% if params and params.subSeries is defined %}
+                                <th scope="col"><input name="subSeries" class="form-control" value="{{ params.subSeries }}" /></th>
+                            {% else %}
+                                <th scope="col"><input name="subSeries" class="form-control" /></th>
+                            {% endif %}
+
+
+
+                            <th scope="col">
+                                <select name="order" class="form-control">
+                                    {% if order==0 %}
+                                        <option value="0" selected>拼音排序</option>
+                                    {% else %}
+                                        <option value="0" >拼音排序</option>
+                                    {% endif %}
+                                    {% if order==1 %}
+                                        <option value="1" selected>倒叙</option>
+                                    {% else %}
+                                        <option value="1">倒叙</option>
+                                    {% endif %}
+                                    {% if order==2 %}
+                                        <option value="2" selected>正序</option>
+                                    {% else %}
+                                        <option value="2">正序</option>
+                                    {% endif %}
+                                </select>
+                            </th>
+
+
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col">
+                                <button type="button" class="btn btn-danger btn-download">下载</button>
+                                <button class="btn btn-success">搜索</button>
+                            </th>
+                        </form>
+                    </tr>
+               </thead>
+               <tbody>
+               {% for item in items %}
+                   <tr data-id="{{ item.id }}">
+                       <th scope="row">{{ item.id }}</th>
+                       <td scope="row">{{ item.pinyin }}</td>
+                       <td scope="row">{{ item.name }}</td>
+                       <td scope="row">{{ item.latinName }}</td>
+                       <td scope="row">{{ item.realPinyin }}</td>
+                       <td scope="row">{{ item.realName }}</td>
+                       <td scope="row">{{ item.realLatin }}</td>
+                       <td scope="row">{{ item.fid }}</td>
+                       <td scope="row">{{ item.tid }}</td>
+                       <td scope="row">{{ item.category }}</td>
+                       <td scope="row">{{ item.cc }}</td>
+                       <td scope="row">{{ item.series }}</td>
+                       <td scope="row">{{ item.subSeries }}</td>
+                       <td scope="row">{{ item.fp }}</td>
+                       <td scope="row">{{ item.franceName }}</td>
+                       <td scope="row">{{ item.utime }}</td>
+                       <td scope="row">{{ item.ctime }}</td>
+                       <td>
+                           <div class="form-group">
+                               <a class="btn btn-success btn-sm" href="/herb/update?id={{ item.id }}">update</a>
+                           </div>
+                           <div class="form-group">
+                               <a class="btn btn-danger btn-sm" href="/herb/delete?id={{ item.id }}">delete</a>
+                           </div>
+                       </td>
+                   </tr>
+               {% endfor %}
+               </tbody>
+           </table>
+       </div>
+       <div id="pageNation">
+           <nav aria-label="Page navigation example">
+             <ul class="pagination">
+                {% for page in pages %}
+                   {% if page.postion == currentPage %}
+                      <li class="page-item active"><a class="page-link" data-href="{{page.url}}">{{ page.key }}</a></li>
+                   {% else %}
+                      <li class="page-item"><a class="page-link" data-href="{{page.url}}">{{ page.key }}</a></li>
+                   {% endif %}
+                {% endfor %}
+             </ul>
+          </nav>
+       </div>
+   </div>
+
+</div>
+<script>
+    $(function () {
+        $("tbody").on("click","tr",function () {
+            let id = $(this).attr("data-id");
+            window.location.assign("/herb/detail?id="+id);
+        });
+        $(".pagination").on("click",".page-link",function () {
+            let href = $(this).attr("data-href");
+            $("#search-bar").attr("action",href);
+            $("#search-bar").submit();
+        });
+
+        $(".btn-download").click(function (){
+            let href = "/herb/download";
+            $("#search-bar").attr("action",href);
+            $("#search-bar").submit();
+        });
+    })
+
+</script>
+{% endblock %}

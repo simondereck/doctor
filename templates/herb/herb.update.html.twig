@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        background: url("/imgs/herb-5.jpeg") no-repeat center center fixed;
+    }
+
+    .create-admin-div{
+        padding: 50px;
+        background-color: white;
+        width: 70%;
+        margin: auto;
+    }
+    .create-admin-div-title{
+        text-align: center;
+    }
+</style>
+
+<div class="create-admin-div">
+    <div class="create-admin-div-title"><h2>更新草药</h2></div>
+    <form method="post" action="/herb/create">
+        {{ form_start(herb_form) }}
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(herb_form) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_row(herb_form.fid) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.tid) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.cmd) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.hmethod) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.category) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.cc) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.series) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.subSeries) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_row(herb_form.pinyin) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.latinName) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.name) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.realLatin) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.realPinyin) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.fp) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(herb_form.franceName) }}
+        </div>     <div class="form-group">
+            {{ form_row(herb_form.realName) }}
+        </div>
+
+
+
+        {{ form_end(herb_form) }}
+    </form>
+
+</div>
+{% endblock %}

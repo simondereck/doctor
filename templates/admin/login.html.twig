@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Calebasse ,Login Please!{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        background-image: url("/imgs/people-7.jpeg");
+
+    }
+    .login-div{
+        background-color: rgba(0,0,0,0.6);
+        padding: 30px;
+        margin: 15vh auto 15vh;
+    }
+    .login-admin-div{
+        border-radius: 5px;
+        padding: 20px;
+        background-color: white;
+        border: 5px;
+        width: 38%;
+        box-shadow: 0 5px 5px rgba(0,0,0,0.3);
+        margin-left: 40%;
+    }
+    .create-admin-div-title{
+        text-align: center;
+    }
+
+    .error-message{
+        color: darkred;
+    }
+</style>
+<div class="login-div">
+    <div class="login-admin-div">
+        <div class="create-admin-div-title"><h2>Admin Login</h2></div>
+        <form method="post" action="/admin/login">
+            {{ form_start(admin_login_form) }}
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(admin_login_form) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(admin_login_form.username) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(admin_login_form.password) }}
+            </div>
+            <div class="form-group error-message">
+                {{ error }}
+            </div>
+            {{ form_end(admin_login_form) }}
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

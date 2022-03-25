@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        background: url("/imgs/herb-5.jpeg") no-repeat center center fixed;
+    }
+    .medical-div{
+        padding: 50px;
+        width: 80%;
+        margin: auto;
+        min-height: 100vh;
+        background: white;
+    }
+
+    .medical-div-title{
+        width: fit-content;
+        margin: auto;
+    }
+    tbody tr:hover{
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+
+    table th,td{
+        min-width: 80px;
+    }
+    .button-group{
+        text-align: right;
+    }
+</style>
+
+<div class="medical-div">
+    <div class="medical-div-title form-group"><h2> 单品药详情 ✅</h2></div>
+    <div class="form-group button-group">
+        <a class="btn btn-success" href="/medical/single/update?id={{ item.id }}">更新</a>
+    </div>
+    <div class="medical-div-table form-group">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>{{ item.id }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Series</th>
+                    <td>{{ item.series }}</td>
+                </tr>
+                <tr>
+                    <th>分类</th>
+                    <td>{{ item.category }}</td>
+                </tr>
+                <tr>
+                    <th>cc</th>
+                    <td>{{ item.cc }}</td>
+                </tr>
+                <tr>
+                    <th>拼音</th>
+                    <td>{{ item.pinyin }}</td>
+                </tr>
+                <tr>
+                    <th>中文</th>
+                    <td>{{ item.name }}</td>
+                </tr>
+
+                <tr>
+                    <th>拉丁</th>
+                    <td>{{ item.latin }}</td>
+                </tr>
+
+                <tr>
+                    <th>latin 真实</th>
+                    <td>{{ item.latinReal }}</td>
+                </tr>
+
+                <tr>
+                    <th>etiquette</th>
+                    <td>{{ item.etiquette }}</td>
+                </tr>
+
+                <tr>
+                    <th>贴纸</th>
+                    <td>{{ item.label }}</td>
+                </tr>
+
+                <tr>
+                    <th>真id</th>
+                    <td>{{ item.tid }}</td>
+                </tr>
+                <tr>
+                    <th>lot</th>
+                    <td>{{ item.lot }}</td>
+                </tr>
+
+                <tr>
+                    <th>申请</th>
+                    <td>{{ item.declareNo }}</td>
+                </tr>
+
+                <tr>
+                    <th>SKU</th>
+                    <td>{{ item.sku }}</td>
+                </tr>
+                <tr>
+                    <th>EAN</th>
+                    <td>{{ item.ean }}</td>
+                </tr>
+                <tr>
+                    <th>用途</th>
+                    <td>{{ item.useAs }}</td>
+                </tr>
+                <tr>
+                    <th>次系</th>
+                    <td>{{ item.subSeries }}</td>
+                </tr>
+
+
+                <tr>
+                    <th>备注</th>
+                    <td>{{ item.description }}</td>
+                </tr>
+                <tr>
+                    <th>网站</th>
+                    {% if item.shop==0 %}
+                        <td>未上架</td>
+                    {% else %}
+                        <td>上架</td>
+                    {% endif %}
+
+                </tr>
+                <tr>
+                    <th>更新时间</th>
+                    <td> {{ item.utime }}</td>
+                </tr>
+                <tr>
+                    <th>创建时间</th>
+                    <td>{{ item.ctime }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

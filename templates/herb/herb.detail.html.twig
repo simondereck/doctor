@@ -1,0 +1,179 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+<style>
+   body{
+      background-image: url("/imgs/herb-2.jpeg");
+   }
+    .herb-detail-div{
+        background-color: white;
+        padding: 50px;
+        width: 70%;
+       margin: auto;
+    }
+    .herb-div-title{
+        text-align: center;
+    }
+    tbody tr:hover{
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+    .button-group{
+       text-align: right;
+    }
+</style>
+
+<div class="herb-detail-div">
+   <div class="herb-div-title form-group"><h3>草药详情  ✅</h3></div>
+   <div class="form-group button-group">
+      <a class="btn btn-success" href="/herb/update?id={{ herb.id }}">update</a>
+   </div>
+   <div class="form-group">
+      <table class="table table-striped" >
+         <thead class="thead-dark">
+            <tr>
+               <td>#</td>
+               <td>{{ herb.id }}</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>tid</td>
+               <td>{{ herb.tid }}</td>
+            </tr>
+            <tr>
+               <td>fid</td>
+               <td>{{ herb.fid }}</td>
+            </tr>
+            <tr>
+               <td>series</td>
+               <td scope="row">{{ herb.series }}</td>
+            </tr>
+            <tr>
+               <td>subSeries</td>
+               <td scope="row">{{ herb.subSeries }}</td>
+            </tr>
+            <tr>
+               <td>pinyin</td>
+               <td scope="row">{{ herb.pinyin }}</td>
+            </tr>
+            <tr>
+               <td>name</td>
+               <td scope="row">{{ herb.name }}</td>
+            </tr>
+            <tr>
+               <td>latin</td>
+               <td scope="row">{{ herb.latinName }}</td>
+            </tr>
+            <tr>
+               <td>franceName</td>
+               <td scope="row">{{ herb.franceName }}</td>
+            </tr>
+            <tr>
+               <td>realPinyin</td>
+               <td scope="row">{{ herb.realPinyin }}</td>
+            </tr>
+            <tr>
+               <td>realName</td>
+               <td scope="row">{{ herb.realName }}</td>
+            </tr>
+            <tr>
+               <td>realLatin</td>
+               <td scope="row">{{ herb.realLatin }}</td>
+            </tr>
+            <tr>
+               <td>detail1</td>
+               <td scope="row">{{ herb.cmd }}</td>
+            </tr>
+            <tr>
+               <td>detail2</td>
+               <td scope="row">{{ herb.hmethod }}</td>
+            </tr>
+            <tr>
+               <td>category</td>
+               <td scope="row">{{ herb.category }}</td>
+            </tr>
+            <tr>
+               <td>cc</td>
+               <td scope="row">{{ herb.cc }}</td>
+            </tr>
+
+
+
+            <tr>
+               <td>fp</td>
+               <td scope="row">{{ herb.fp }}</td>
+            </tr>
+            <tr>
+               <td>membrum</td>
+               <td scope="row">{{ herb.membrum }}</td>
+            </tr>
+{#            <tr>#}
+{#               <td>membrumSub</td>#}
+{#               <td scope="row">{{ herb.membrumSub }}</td>#}
+{#            </tr>#}
+
+            <tr>
+               <td>packageFranceName</td>
+               <td scope="row">{{ herb.packageFranceName }}</td>
+            </tr>
+            <tr>
+               <td>latinLabelName</td>
+               <td scope="row">{{ herb.latinLabelName }}</td>
+            </tr>
+            <tr>
+               <td>latinFtcName</td>
+               <td scope="row">{{ herb.latinFtcName }}</td>
+            </tr>
+            <tr>
+               <td>law</td>
+               <td scope="row">{{ herb.law }}</td>
+            </tr>
+            <tr>
+               <td>description</td>
+               <td scope="row">{{ herb.description }}</td>
+            </tr>
+            <tr>
+               <td>法进价</td>
+               <td scope="row">{{ herb.frPrice }}</td>
+            </tr>
+            <tr>
+               <td>江阴价</td>
+               <td scope="row">{{ herb.jiangyingPrice }}</td>
+            </tr>
+            <tr>
+               <td>仲景堂</td>
+               <td scope="row">{{ herb.jingPrice }}</td>
+            </tr>
+            <tr>
+               <td>百草</td>
+               <td scope="row">{{ herb.baicaoPrice }}</td>
+            </tr>
+            <tr>
+               <td>CMC</td>
+               <td scope="row">{{ herb.Cmc }}</td>
+            </tr>
+            <tr>
+               <td>旧批发价</td>
+               <td scope="row">{{ herb.oldPrice }}</td>
+            </tr>
+            <tr>
+               <td>新批发价</td>
+               <td scope="row">{{ herb.newPrice }}</td>
+            </tr>
+            <tr>
+               <td>utime</td>
+               <td scope="row">{{ herb.utime }}</td>
+            </tr>
+            <tr>
+               <td>ctime</td>
+               <td scope="row">{{ herb.ctime }}</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
+
+{% endblock %}

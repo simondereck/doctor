@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        background: url("/imgs/herb-5.jpeg") no-repeat center center fixed;
+    }
+    .medical-div{
+        padding: 50px;
+        width: 80%;
+        margin: auto;
+        min-height: 100vh;
+        background: white;
+    }
+
+    .medical-div-title{
+        width: fit-content;
+        margin: auto;
+    }
+    tbody tr:hover{
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+
+
+
+    table th,td{
+        min-width: 80px;
+    }
+    .button-group{
+        text-align: right;
+    }
+</style>
+
+<div class="medical-div">
+    <div class="medical-div-title form-group"><h2> 中成药详情 ✅</h2></div>
+    <div class="form-group button-group">
+        <a class="btn btn-danger" href="/medical/formula?id={{ item.id }}">配方</a>
+        <a class="btn btn-success" href="/medical/update?id={{ item.id }}">更新</a>
+    </div>
+    <div class="medical-div-table form-group">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>{{ item.id }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>类型</th>
+                    <td>
+                        {% if item.type==1 %}
+                            胶囊1
+                        {% elseif item.type==2%}
+                            浓缩粉2
+                        {% elseif item.type==3 %}
+                            复方小药包3
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Series</th>
+                    <td>{{ item.series }}</td>
+                </tr>
+                <tr>
+                    <th>分类</th>
+                    <td>{{ item.category }}</td>
+                </tr>
+                <tr>
+                    <th>cc</th>
+                    <td>{{ item.cc }}</td>
+
+                </tr>
+
+                <tr>
+                    <th>中文</th>
+                    <td>{{ item.chinese }}</td>
+                </tr>
+                <tr>
+                    <th>拼音</th>
+                    <td>{{ item.pinyin }}</td>
+                </tr>
+
+
+                <tr>
+                    <th>真id</th>
+                    <td>{{ item.tid }}</td>
+                </tr>
+                <tr>
+                    <th>申报</th>
+                    <td>{{ item.declareNo }}</td>
+                </tr>
+                <tr>
+                    <th>SKU</th>
+                    <td>{{ item.sku }}</td>
+                </tr>
+                <tr>
+                    <th>EAN</th>
+                    <td>{{ item.ean }}</td>
+                </tr>
+                <tr>
+                    <th>批基础</th>
+                    <td>{{ item.priceInternal }}</td>
+                </tr>
+                <tr>
+                    <th>批CP</th>
+                    <td>{{ item.priceCp }}</td>
+                </tr>
+                <tr>
+                    <th>批GL</th>
+                    <td>{{ item.priceGl }}</td>
+                </tr>
+                <tr>
+                    <th>店</th>
+                    <td>{{ item.priceShop }}</td>
+                </tr>
+                <tr>
+                    <th>网GL</th>
+                    <td>{{ item.priceInterGl }}</td>
+                </tr>
+                <tr>
+                    <th>网CP</th>
+                    <td>{{ item.priceInterCp }}</td>
+                </tr>
+                <tr>
+                    <th>网CP</th>
+                    <td>{{ item.priceInterCp }}</td>
+                </tr>
+
+
+                <tr>
+                    <th>网站</th>
+                    {% if item.shop==0 %}
+                        <td>未上架</td>
+                    {% else %}
+                        <td>上架</td>
+                    {% endif %}
+
+                </tr>
+                <tr>
+                    <th>用法</th>
+                    <td>{{ item.useAs }}</td>
+                </tr>
+                <tr>
+                    <th>备注</th>
+                    <td>{{ item.description }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ item.des2 }}</td>
+                </tr>
+                <tr>
+                    <th>cle 1</th>
+                    <td>{{ item.cle1 }}</td>
+                </tr>
+                <tr>
+                    <th>cle 2</th>
+                    <td>{{ item.des2 }}</td>
+                </tr>
+                <tr>
+                    <th>cle 3</th>
+                    <td>{{ item.des2 }}</td>
+                </tr>
+                <tr>
+                    <th>cle 4</th>
+                    <td>{{ item.cle4 }}</td>
+                </tr>
+                <tr>
+                    <th>更新时间</th>
+                    <td> {{ item.utime }}</td>
+                </tr>
+                <tr>
+                    <th>创建时间</th>
+                    <td>{{ item.ctime }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

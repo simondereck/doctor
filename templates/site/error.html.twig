@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+<style>
+    .error-div{
+        padding: 50px;
+        height: 100vh;
+    }
+    .error-div-title{
+        text-align: center;
+    }
+</style>
+
+<div class="error-div">
+    <div class="error-div-title">
+        <h3>Erro: {{ message }}! ❌</h3>
+    </div>
+</div>
+{% endblock %}

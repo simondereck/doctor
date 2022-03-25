@@ -1,0 +1,187 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        background: url("/imgs/herb-5.jpeg") no-repeat center center fixed;
+    }
+    .medical-div{
+        padding: 50px;
+        width: 100%;
+        min-height: 100vh;
+        background: white;
+    }
+
+    .medical-div-title{
+        width: fit-content;
+        margin: auto;
+    }
+    table th,td{
+        min-width: 80px;
+    }
+
+    .herb-item{
+        background-color: whitesmoke;
+    }
+
+    .calcu{
+        width: 50vw;
+        border-radius: 5px;
+        box-shadow: 0 5px 5px rgba(0,0,0,0.3);
+        margin: auto;
+    }
+
+    .calcu-title{
+        padding: 20px;
+        background-color: #1b1e21;
+        color: white;
+        text-align: center;
+    }
+    .calcu-body{
+        padding: 50px;
+    }
+</style>
+<div class="medical-div">
+    <div class="medical-div-title"><h2>{{ item.chinese }} 配方 ✅</h2></div>
+
+    <div class="medical-div-table">
+        {% if app.session.get("type")==0 %}
+            <table class="table">
+                <thead class="thead-dark">
+                <tr><th>id</th><th>名字</th><th>pinyin</th><th>latin</th><th></th><th>计量</th></tr>
+                </thead>
+                <tbody>
+{#                外部配方#}
+                {% for jsonObj in json %}
+                    {% if jsonObj.count_outside %}
+                        {% set total_count = total_count + jsonObj.count_outside %}
+                    {% endif %}
+                {% endfor %}
+                {% for jsonObj in json %}
+                    {% if total>0 %}
+                        <tr>
+                            <td>{{ jsonObj.id }}</td><td>{{ jsonObj.chinese }}</td>
+                            <td>{{ jsonObj.item.pinyin }}</td>
+                            <td>{{ jsonObj.item.latinName }}</td>
+                            <td><a href="/herb/detail?id={{ jsonObj.id }}'">详情</a></td>
+                            <td>{{ jsonObj.count_outside/total_count * total }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>{{ jsonObj.id }}</td><td>{{ jsonObj.chinese }}</td>
+                            <td>{{ jsonObj.item.pinyin }}</td>
+                            <td>{{ jsonObj.item.latinName }}</td>
+                            <td><a href="/herb/detail?id={{ jsonObj.id }}'">详情</a></td>
+                            <td>{{ jsonObj.count_outside }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                {% if total>0 %}
+                    <tr><td></td><td></td><td></td><td></td><td></td><td>{{ total }}</td></tr>
+                {% else %}
+                    <tr><td></td><td></td><td></td><td></td><td></td><td>{{ total_count }}</td></tr>
+                {% endif %}
+                </tbody>
+            </table>
+        {% else %}
+            {% if item.type==3 %}
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr><th>id</th><th>名字</th><th>拼音</th><th>拉丁</th><th></th><th>计量</th></tr>
+                    </thead>
+                    <tbody>
+                    {% for jsonObj in json %}
+                        {% set total_count = total_count + jsonObj.count  %}
+                    {% endfor %}
+                    {% for jsonObj in json %}
+                        {% if total>0 %}
+                            <tr>
+                                <td>{{ jsonObj.id }}</td>
+                                <td>{{ jsonObj.chinese }}</td>
+                                <td>{{ jsonObj.item.pinyin }}</td>
+                                <td>{{ jsonObj.item.latinName }}</td>
+                                <td><a href="/herb/detail?id={{ jsonObj.id }}'">详情</a></td>
+                                <td>{{ jsonObj.count/total_count * total }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td>{{ jsonObj.id }}</td>
+                                <td>{{ jsonObj.chinese }}</td>
+                                <td>{{ jsonObj.item.pinyin }}</td>
+                                <td>{{ jsonObj.item.latinName }}</td>
+                                <td><a href="/herb/detail?id={{ jsonObj.id }}'">详情</a></td>
+                                <td>{{ jsonObj.count }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    {% if total>0 %}
+                        <tr><td></td><td></td><td></td><td></td><td></td><td>{{ total }}</td></tr>
+                    {% else %}
+                        <tr><td></td><td></td><td></td><td></td><td></td><td>{{ total_count }}</td></tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+
+            {% else %}
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr><th>id</th><th>名字</th><th>拼音</th><th>拉丁</th><th></th><th>计量</th></tr>
+                    </thead>
+                    <tbody>
+                    {% for jsonObj in json %}
+                        {% if jsonObj.count_outside %}
+                            {% set total_count = total_count + jsonObj.count_outside %}
+                        {% endif %}
+                    {% endfor %}
+                    {% for jsonObj in json %}
+                        {% if jsonObj.count_outside %}
+                            {% if total>0 %}
+                                <tr>
+                                    <td>{{ jsonObj.id }}</td>
+                                    <td>{{ jsonObj.chinese }}</td>
+                                    <td>{{ jsonObj.item.pinyin }}</td>
+                                    <td>{{ jsonObj.item.latinName }}</td>
+                                    <td><a href="/herb/detail?id={{ jsonObj.id }}'">详情</a></td>
+                                    <td>{{ jsonObj.count_outside/total_count * total }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td>{{ jsonObj.id }}</td>
+                                    <td>{{ jsonObj.chinese }}</td>
+                                    <td>{{ jsonObj.item.pinyin }}</td>
+                                    <td>{{ jsonObj.item.latinName }}</td>
+                                    <td><a href="/herb/detail?id={{ jsonObj.id }}'">详情</a></td>
+                                    <td>{{ jsonObj.count_outside }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if total>0 %}
+                        <tr><td></td><td></td><td></td><td></td><td></td><td>{{ total }}</td></tr>
+                    {% else %}
+                        <tr><td></td><td></td><td></td><td></td><td></td><td>{{ total_count }}</td></tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            {% endif %}
+        {% endif %}
+
+    </div>
+    <div class="calcu">
+        <div class="calcu-title">计算器</div>
+        <div class="form-group calcu-body">
+            <form action="/medical/formula?id={{ item.id }}" method="post">
+                <div class="form-group">
+                    <input class="form-control" name="total" placeholder="总计" value="{{ total }}"/>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success">计算</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

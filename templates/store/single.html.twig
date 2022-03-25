@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        background: url("/imgs/herb-5.jpeg") no-repeat center center fixed;
+    }
+    .medical-div{
+        padding: 50px;
+        width: 100%;
+        min-height: 100vh;
+        background: white;
+    }
+
+    .medical-div-title{
+        width: fit-content;
+        margin: auto;
+    }
+    tbody tr:hover{
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+
+    #pageNation{
+        margin: auto;
+        width: fit-content;
+    }
+    .medical-div-table{
+        overflow-x: scroll;
+    }
+    table th,td{
+        min-width: 80px;
+    }
+</style>
+<div class="medical-div">
+    <div class="medical-div-title"><h2> 中成药列表 ✅</h2></div>
+    <div class="medical-div-table">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>名字</th>
+                    <th>series</th>
+                    <th>category</th>
+                    <th>cc</th>
+                    <th>真id</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>optinos</th>
+                </tr>
+                <tr>
+                    <form method="post" action="/store/single" id="search-bar">
+                        <th></th>
+                        {% if params and params.name is defined %}
+                            <th><input class="form-control" name="name" value="{{ params.name }}"/></th>
+                        {% else %}
+                            <th><input class="form-control" name="name"/></th>
+                        {% endif %}
+                        {% if params and params.series is defined %}
+                            <th><input class="form-control" name="series" value="{{ params.series }}"/></th>
+                        {% else %}
+                            <th><input class="form-control" name="series" /></th>
+                        {% endif %}
+                        {% if params and params.category is defined %}
+                            <th><input class="form-control" name="category" value="{{ params.category }}"/></th>
+                        {% else %}
+                            <th><input class="form-control" name="category" /></th>
+                        {% endif %}
+                        {% if params and params.category is defined %}
+                            <th><input class="form-control" name="cc" value="{{ params.cc }}"/></th>
+                        {% else %}
+                            <th><input class="form-control" name="cc" /></th>
+                        {% endif %}
+                        {% if params and params.tid is defined %}
+                            <th><input class="form-control" name="tid" value="{{ params.tid }}"/></th>
+                        {% else %}
+                            <th><input class="form-control" name="tid" /></th>
+                        {% endif %}
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>
+                            <button class="btn btn-success">搜索</button>
+                            <button type="button" class="btn btn-danger btn-download">下载</button>
+                            <button type="button" class="btn btn-info btn-template">模版</button>
+                        </th>
+                    </form>
+                </tr>
+            </thead>
+            <tbody>
+                {% for store in stores %}
+                    <tr data-id="{{ store.item.id }}">
+                        <th>{{ store.item.id }}</th>
+                        <td>{{ store.item.name }}</td>
+                        <td>{{ store.item.series }}</td>
+                        <td>{{ store.item.category }}</td>
+                        <td>{{ store.item.cc }}</td>
+                        <td>{{ store.item.tid }}</td>
+                        {% for it in store.store %}
+                            <td>{{ it.cdate }} <br>  {{ it.data }}</td>
+                        {% endfor %}
+                        <td>
+                            <a href="/medical/single/detail?id={{ store.item.id }}" class="btn btn-info">详情</a>
+                            <a href="/store/single/detail?id={{ store.item.id }}" class="btn btn-success">库存详情</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+    <div id="pageNation">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% for page in pages %}
+                    {% if page.postion == currentPage %}
+                        <li class="page-item active"><a class="page-link" data-href="{{page.url}}">{{ page.key }}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" data-href="{{page.url}}">{{ page.key }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+    <script>
+        $(".pagination").on("click",".page-link",function () {
+            let href = $(this).attr("data-href");
+            $("#search-bar").attr("action",href);
+            $("#search-bar").submit();
+        });
+
+        $(".btn-download").click(function (){
+            let href = "/store/single/download";
+
+            $("#search-bar").attr("action",href);
+            $("#search-bar").submit();
+
+        });
+
+        $(".btn-template").click(function () {
+            let href = "/store/single/template";
+            $("#search-bar").attr("action",href);
+            $("#search-bar").submit();
+        });
+
+        $("tbody").on("click","tr",function () {
+            let id = $(this).attr("data-id");
+            window.location.assign("/store/single/detail?id="+id);
+        });
+
+    </script>
+
+</div>
+{% endblock %}

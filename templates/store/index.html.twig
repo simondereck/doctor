@@ -1,0 +1,180 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+<style>
+    body{
+        background: url("/imgs/herb-5.jpeg") no-repeat center center fixed;
+    }
+    .medical-div{
+        padding: 50px;
+        width: 100%;
+        min-height: 100vh;
+        background: white;
+    }
+
+    .medical-div-title{
+        width: fit-content;
+        margin: auto;
+    }
+    tbody tr:hover{
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
+
+    #pageNation{
+        margin: auto;
+        width: fit-content;
+    }
+    .medical-div-table{
+        overflow-x: scroll;
+    }
+    table th,td{
+        min-width: 80px;
+    }
+</style>
+<div class="medical-div">
+    <div class="medical-div-title"><h2> 中成药列表 ✅</h2></div>
+    <div class="medical-div-table">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>类型</th>
+                    <th>series</th>
+                    <th>分类</th>
+                    <th>真id</th>
+                    <th>中文</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>optinos</th>
+                </tr>
+                <tr>
+                    <form method="post" action="/store/index" id="search-bar">
+                        <th></th>
+                        <th>
+                            <select name="type" class="form-control">
+                                {%  if params and params.type is defined and params.type == 1   %}
+                                    <option value="0">--类型--</option>
+                                    <option value="1" selected>胶囊1</option>
+                                    <option value="2">浓缩粉2</option>
+                                    <option value="3">复方小药包3</option>
+                                {%  elseif params and params.type is defined and params.type == 2 %}
+                                    <option value="0">--类型--</option>
+                                    <option value="1">胶囊1</option>
+                                    <option value="2" selected>浓缩粉2</option>
+                                    <option value="3">复方小药包3</option>
+                                {%  elseif params and params.type is defined and params.type == 3 %}
+                                    <option value="0">--类型--</option>
+                                    <option value="1">胶囊1</option>
+                                    <option value="2">浓缩粉2</option>
+                                    <option value="3" selected>复方小药包3</option>
+                                {% else %}
+                                    <option value="0">--类型--</option>
+                                    <option value="1">胶囊1</option>
+                                    <option value="2">浓缩粉2</option>
+                                    <option value="3">复方小药包3</option>
+                                {% endif %}
+
+                            </select>
+                        </th>
+                        {% if params.series is defined %}
+                            <th><input name="series" class="form-control" value="{{ params.series }}"/></th>
+                        {% else %}
+                            <th><input name="series" class="form-control"/></th>
+                        {% endif %}
+                        {% if params.category is defined %}
+                            <th><input name="category" class="form-control" value="{{ params.category }}"/></th>
+                        {% else %}
+                            <th><input name="category" class="form-control"/></th>
+                        {% endif %}
+                        {% if params.tid is defined %}
+                            <th><input name="tid" class="form-control" value="{{ params.tid }}"/></th>
+                        {% else %}
+                            <th><input name="tid" class="form-control"/></th>
+                        {% endif %}
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>
+                            <button class="btn btn-success">搜索</button>
+                            <button class="btn btn-danger btn-download">下载</button>
+                            <button class="btn btn-info btn-template">模版</button>
+                        </th>
+                    </form>
+                </tr>
+            </thead>
+            <tbody>
+                {% for store in stores %}
+                    <tr data-id="{{ store.item.id }}">
+                        <td>{{ store.item.id }}</td>
+                        <td>
+                            {% if store.item.type==1 %}
+                                胶囊1
+                            {% elseif store.item.type==2 %}
+                                浓缩粉2
+                            {% elseif store.item.type==3 %}
+                                复方小药包3
+                            {% endif %}
+                        </td>
+                        <td>{{ store.item.series }}</td>
+                        <td>{{ store.item.category }}</td>
+                        <td>{{ store.item.tid }}</td>
+                        <td>{{ store.item.chinese }}</td>
+                        {% for it in store.store %}
+                            <td>{{ it.cdate }} <br>  {{ it.data }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="pageNation">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% for page in pages %}
+                    {% if page.postion == currentPage %}
+                        <li class="page-item active"><a class="page-link" data-href="{{page.url}}">{{ page.key }}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" data-href="{{page.url}}">{{ page.key }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+    <script>
+        $(".pagination").on("click",".page-link",function () {
+            let href = $(this).attr("data-href");
+            $("#search-bar").attr("action",href);
+            $("#search-bar").submit();
+        });
+        $(".btn-download").click(function () {
+            let href = "/store/download/medical";
+            $("#search-bar").attr("action",href);
+            $("#search-bar").submit();
+        });
+
+        $(".btn-template").click(function () {
+            let href = "/store/medical/template";
+            $("#search-bar").attr("action",href);
+            $("#search-bar").submit();
+        });
+        $("tbody").on("click","tr",function () {
+            let id = $(this).attr("data-id");
+            window.location.assign("/store/medical/detail?id="+id);
+        });
+
+    </script>
+</div>
+{% endblock %}

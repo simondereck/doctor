@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Calebasse inventory system!{% endblock %}
+
+{% block body %}
+    <style>
+        .store-detail{
+            background-color: white;
+            padding: 50px;
+            width: 80%;
+            margin: auto;
+            overflow-x: scroll;
+            height: 100%;
+        }
+        tbody tr:hover{
+            background-color: whitesmoke;
+            cursor: pointer;
+        }
+
+        table th,td{
+            min-width: 80px;
+        }
+    </style>
+    <div class="store-detail">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr><th>日期</th><th>存量</th></tr>
+            </thead>
+            <tbody>
+                {% for store in stores.store %}
+                    <tr>
+                        <th>{{ store.cdate }}</th>
+                        <td>{{ store.data }}</td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
